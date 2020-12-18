@@ -453,6 +453,48 @@ public void AutoID()
         }
     
     }
+    
+    public void table_update()
+    {
+        int c;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            con = DriverManager. getConnection("jdbc:mysql://localhost/empmanagement", "root", "");
+            pst = con.prepareStatement("select * from employee");
+            ResultSet rs = pst.executeQuery();
+            
+            ResultSetMetaData rm = rs.getMetaData();
+            c = rm.getColumnCount();
+            
+            DefaultTableModel Dft = (DefaultTableModel)jTable1.getModel();
+            Dft.setRowCount(0);
+            
+            while(rs.next())
+            {
+                Vector v = new Vector();
+                
+                for(int i = 1; i<=c; i++)
+                {
+                    v.add(rs.getString("id"));
+                    v.add(rs.getString("employeename"));
+                    v.add(rs.getString("salary"));
+                }
+                
+                Dft.addRow(v);
+               
+            }
+            
+            
+            
+            
+             } catch (ClassNotFoundException ex) {
+            Logger.getLogger(employeeReg.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(employeeReg.class.getName()).log(Level.SEVERE, null, ex);
+        }
+           
+                   
+    }
         
       
 
