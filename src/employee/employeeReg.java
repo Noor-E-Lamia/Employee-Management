@@ -418,7 +418,41 @@ try {
 
     
     
-
+public void AutoID()
+{
+    
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+           
+            con = DriverManager. getConnection("jdbc:mysql://localhost/empmanagement", "root", "");
+            Statement s = con.createStatement();
+            
+            ResultSet rs = s.executeQuery("select MAX(id) from employee");
+            
+            rs.next();
+            rs.getString("MAX(id)");
+            
+            if(rs.getString("MAX(id)")== null)
+            {
+                txtid.setText("ES001");
+                
+            }
+            else
+            {
+                long id = Long.parseLong(rs.getString("MAX(id)").substring(2,rs.getString("MAX(id)").length()));
+                id++;
+                txtid.setText("ES" + String.format("%03d", id));
+            }
+                  
+        }
+        
+        catch (ClassNotFoundException ex) {
+            Logger.getLogger(employeeReg.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(employeeReg.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+    }
         
       
 
